@@ -12,3 +12,10 @@ elk:
     - "5601:5601"
     - "9200:9200"
     - "5044:5044"
+  volumes:
+    - "./volumes/log:/var/log/elk"
+    - "./volumes/log:/var/log/elasticsearch"
+    - "./volumes/data:/var/data/elk"
+    - "./elasticsearch.yml:/etc/elasticsearch/elasticsearch.yml"
+  environment:
+    - MAX_MAP_COUNT=262144
