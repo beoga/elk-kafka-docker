@@ -5,17 +5,48 @@
 
 # Run with:
 # docker-compose up
+version: '3.3'
+services:
+  elk:
+    build: .
+    ports:
+      - "5601:5601"
+      - "9200:9200"
+      - "5044:5044"
+    volumes:
+      - "./volumes/log:/var/log/elk"
+      - "./volumes/log:/var/log/elasticsearch"
+      - "./volumes/data:/var/data/elk"
+    environment:
+      - MAX_MAP_COUNT=262144
 
-elk:
-  build: .
-  ports:
-    - "5601:5601"
-    - "9200:9200"
-    - "5044:5044"
-  volumes:
-    - "./volumes/log:/var/log/elk"
-    - "./volumes/log:/var/log/elasticsearch"
-    - "./volumes/data:/var/data/elk"
-    - "./elasticsearch.yml:/etc/elasticsearch/elasticsearch.yml"
-  environment:
-    - MAX_MAP_COUNT=262144
+  # Elastalert instance.
+  # Docker image available from Docker Hub.
+  elastalert:
+      image: bitsensor/elastalert:3.0.0-beta.1
+      ports:
+          - "3030:3030"
+          - "3333:3333"
+      depends_on:
+          - elk
+#      network_mode: "host"
+      cap_add:
+          - SYS_TIME
+          - SYS_NICE
+      volumes:
+          - ../ElastAlert/config/elastalert_config.yaml:/opt/elastalert/config.yaml
+          - ../ElastAlert/config/elastalert-test.yaml:/opt/elastalert/config-test.yaml
+          - ../ElastAlert/config/elastalert_config.json:/opt/elastalert-server/config/config.json
+          - ../ElastAlert/rules:/opt/elastalert/rules
+          - ../ElastAlert/data:/opt/elastalert/data
+          - ../ElastAlert/rule_templates:/opt/elastalert/rule_templates
+#          - ../ElastAlert/logs:/opt/logs
+#          - ../ElastAlert/rules:/opt/rules
+#          - ../ElastAlert/config:/opt/config
+  #    links:
+  #        - elasticsearch:elasticsearchhost
+#      environment:
+  #        - ELASTICSEARCH_USER=elastic
+  #        - ELASTICSEARCH_PASSWORD=changeme
+  #        - SET_CONTAINER_TIMEZONE=true
+  #        - CONTAINER_TIMEZONE=Asia/Taipei
