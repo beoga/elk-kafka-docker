@@ -22,7 +22,7 @@ services:
               soft: 65536
               hard: 65536
     environment:
-      #- MAX_MAP_COUNT=262144
+      - MAX_MAP_COUNT=262144
       - ES_HEAP_SIZE=1g
       # - KIBANA_START=0
       # - LOGSTASH_START=0

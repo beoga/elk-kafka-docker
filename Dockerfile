@@ -122,6 +122,7 @@ RUN sed -i -e 's#^KIBANA_HOME=$#KIBANA_HOME='$KIBANA_HOME'#' /etc/init.d/kibana 
 ###############################################################################
 
 ### configure Elasticsearch
+RUN chown -R elasticsearch:elasticsearch /var/log/elasticsearch
 
 ADD ./elasticsearch.yml ${ES_PATH_CONF}/elasticsearch.yml
 ADD ./elasticsearch-default /etc/default/elasticsearch
