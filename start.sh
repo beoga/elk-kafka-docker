@@ -257,7 +257,7 @@ if [ -x /usr/local/bin/elk-post-hooks.sh ]; then
     fi
   fi
 
-  . /usr/local/bin/elk-post-hooks.sh
+  # . /usr/local/bin/elk-post-hooks.sh
 fi
 
 
