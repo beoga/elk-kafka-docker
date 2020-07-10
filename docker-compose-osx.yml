@@ -40,6 +40,10 @@ services:
       cap_add:
           - SYS_TIME
           - SYS_NICE
+      command: |
+        bash -c "
+          sleep 1
+        "
       volumes:
           - ../ElastAlert/config/elastalert_config.yaml:/opt/elastalert/config.yaml
           - ../ElastAlert/config/elastalert-test.yaml:/opt/elastalert/config-test.yaml
