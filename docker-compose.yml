@@ -14,17 +14,18 @@ services:
       - "9200:9200"
       - "5044:5044"
     volumes:
-      - "./volumes/log:/var/log/elk"
-      - "./volumes/log:/var/log/elasticsearch"
-      - "./volumes/data:/var/data/elk"
+      - ./volumes/log:/var/log/elk
+      - ./volumes/log:/var/log/elasticsearch
+      - ./volumes/log/kibana:/var/log/kibana
+      - ./volumes/data:/var/data/elk
     ulimits:
       nofile:
         soft: 65536
         hard: 65536
     environment:
-      #- MAX_MAP_COUNT=262144
+      - MAX_MAP_COUNT=262144
       - ES_HEAP_SIZE=1g
-      # - KIBANA_START=0
+        # - KIBANA_START=0
       # - LOGSTASH_START=0
 
   # Elastalert instance.
@@ -34,8 +35,8 @@ services:
     ports:
       - "3030:3030"
       - "3333:3333"
-    depends_on:
-      - elk
+        #depends_on:
+        # - elk
     #      network_mode: "host"
     cap_add:
       - SYS_TIME

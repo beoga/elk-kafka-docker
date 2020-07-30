@@ -28,7 +28,7 @@ RUN set -x \
  && set +x
 
 ### install Elasticsearch
-ARG ELK_VERSION=7.5.2
+ARG ELK_VERSION=7.7.1
 ENV \
  ES_VERSION=${ELK_VERSION} \
  ES_HOME=/opt/elasticsearch \

@@ -44,9 +44,8 @@ fi
 
 ## run pre-hooks
 if [ -x /usr/local/bin/elk-pre-hooks.sh ]; then
-  . /usr/local/bin/elk-pre-hooks.sh
+/usr/local/bin/elk-pre-hooks.sh
 fi
-
 
 ## start services as needed
 
@@ -213,9 +212,9 @@ if [ "$ELASTICSEARCH_START" -ne "1" ] && [ "$LOGSTASH_START" -ne "1" ] \
   exit 1
 fi
 
-
+KIBANA_START=0
 ## run post-hooks
-if [ -x /usr/local/bin/elk-post-hooks.sh ]; then
+#if [ -x /usr/local/bin/elk-post-hooks.sh ]; then
   ### if Kibana was started...
   if [ "$KIBANA_START" -eq "1" ]; then
 
@@ -257,8 +256,8 @@ if [ -x /usr/local/bin/elk-post-hooks.sh ]; then
     fi
   fi
 
-  # . /usr/local/bin/elk-post-hooks.sh
-fi
+  sleep 60; /usr/local/bin/elk-post-hooks.sh;
+#fi
 
 
 touch $OUTPUT_LOGFILES
